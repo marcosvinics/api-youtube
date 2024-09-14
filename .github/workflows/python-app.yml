@@ -31,4 +31,4 @@ jobs:
           API_KEY: ${{ secrets.API_KEY }}
           CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
         run: |
-          python your_script.py
+          python api.py
