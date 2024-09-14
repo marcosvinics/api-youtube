@@ -5,8 +5,8 @@ import difflib
 
 app = Flask(__name__)
 
-# As variáveis de ambiente são obtidas no workflow do GitHub Actions
-API_KEY = os.getenv('API_KEY')
+# Recupera as variáveis de ambiente
+API_KEY = os.getenv('YOUTUBE_API_KEY')
 CHANNEL_ID = os.getenv('CHANNEL_ID')
 MAX_RESULTS_PER_PAGE = 5
 
