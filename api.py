@@ -1,15 +1,14 @@
 from flask import Flask, jsonify, Response, request
 import requests
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
+import difflib
 
 app = Flask(__name__)
 
-API_KEY = os.getenv('API_KEY')  
-CHANNEL_ID = os.getenv('CHANNEL_ID')  
-MAX_RESULTS_PER_PAGE = 5 
+# As variáveis de ambiente são obtidas no workflow do GitHub Actions
+API_KEY = os.getenv('API_KEY')
+CHANNEL_ID = os.getenv('CHANNEL_ID')
+MAX_RESULTS_PER_PAGE = 5
 
 def get_all_playlists():
     playlists = []
@@ -47,12 +46,12 @@ def get_latest_video():
 def get_playlists():
     playlist_name = request.args.get('name')
     if playlist_name:
-        playlist_name = playlist_name.lower()  
+        playlist_name = playlist_name.lower()
         all_playlists = get_all_playlists()
         matched_playlists = []
         for playlist in all_playlists:
-            item_name = playlist['snippet']['title'].lower()  
-            if playlist_name in item_name:  
+            item_name = playlist['snippet']['title'].lower()
+            if playlist_name in item_name:
                 playlist_id = playlist['id']
                 playlist_url = f'https://www.youtube.com/playlist?list={playlist_id}'
                 matched_playlists.append(f'{item_name}: {playlist_url}')
