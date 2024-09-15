@@ -16,4 +16,5 @@ jobs:
     - name: Run script
       env:
         MY_SECRET_TOKEN: ${{ secrets.MY_SECRET_TOKEN }}
+        CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
       run: python api.py
