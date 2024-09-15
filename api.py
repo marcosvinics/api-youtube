@@ -45,7 +45,7 @@ def get_latest_video():
     data = response.json()
 
     if 'items' in data and len(data['items']) > 0:
-    video_item = data['items'][0]
+        video_item = data['items'][0]
     if 'videoId' in video_item['id']:
         video_id = video_item['id']['videoId']
     else:
