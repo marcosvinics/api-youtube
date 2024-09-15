@@ -50,7 +50,7 @@ def get_latest_video():
             video_id = video_item['id']['videoId']
             video_title = video_item['snippet']['title']
             video_url = f'https://www.youtube.com/watch?v={video_id}'
-            return Response(f'{video_title}: {video_url}', mimetype='text/plain')
+            return Response(f'{video_title}: {video_url} ', mimetype='text/plain')
         else:
             return Response("No video found", mimetype='text/plain'), 404
     else:
