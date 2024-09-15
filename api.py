@@ -46,10 +46,15 @@ def get_latest_video():
 
     if 'items' in data and len(data['items']) > 0:
         video_item = data['items'][0]
-    if 'videoId' in video_item['id']:
-        video_id = video_item['id']['videoId']
+        if 'videoId' in video_item['id']:
+            video_id = video_item['id']['videoId']
+            video_title = video_item['snippet']['title']
+            video_url = f'https://www.youtube.com/watch?v={video_id}'
+            return Response(f'{video_title}: {video_url}', mimetype='text/plain')
+        else:
+            return Response("No video found", mimetype='text/plain'), 404
     else:
-        return Response("No video found", mimetype='text/plain'), 404
+        return Response('No videos found', mimetype='text/plain'), 404
 
 @app.route('/playlists', methods=['GET'])
 def get_playlists():
