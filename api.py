@@ -38,8 +38,8 @@ def get_all_playlists():
             break
     return playlists
 
-@app.route('/', methods=['GET'])
-def main_page():
+@app.route('/')
+def index():
     return Response(f'Para testar a API, acesse a URL adicionando "/playlists" ou "/latest_video".', mimetype='text/plain'), 200
 
 @app.route('/latest_video', methods=['GET'])
