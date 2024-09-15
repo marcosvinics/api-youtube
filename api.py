@@ -10,6 +10,9 @@ API_KEY = os.getenv('MY_SECRET_TOKEN')
 CHANNEL_ID = os.getenv('CHANNEL_ID')
 MAX_RESULTS_PER_PAGE = 5
 
+if not API_KEY or not CHANNEL_ID:
+    raise ValueError("API_KEY and CHANNEL_ID must be set as environment variables")
+
 def get_all_playlists():
     playlists = []
     next_page_token = None
@@ -18,6 +21,10 @@ def get_all_playlists():
         if next_page_token:
             url += f'&pageToken={next_page_token}'
         response = requests.get(url)
+
+        if response.status_code != 200:
+            return []
+        
         data = response.json()
         if 'items' in data:
             for item in data['items']:
