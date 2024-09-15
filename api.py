@@ -38,6 +38,10 @@ def get_all_playlists():
             break
     return playlists
 
+@app.route('/')
+def index():
+    return Response(f'Para testar a API, acesse a URL adicionando "/playlists" ou "/latest_video".', mimetype='text/plain'), 200
+
 @app.route('/latest_video', methods=['GET'])
 def get_latest_video():
     url = f'https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId={CHANNEL_ID}&maxResults=1&key={API_KEY}'
