@@ -1,31 +1,19 @@
-name: Python application
+name: CI
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
+    - uses: actions/checkout@v2
     - name: Set up Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-
     - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-
-    - name: Run api.py
+      run: pip install -r requirements.txt
+    - name: Run script
       env:
-        YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-        CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
-      run: |
-        python api.py
+        MY_SECRET_TOKEN: ${{ secrets.MY_SECRET_TOKEN }}
+      run: python script.py
