@@ -20,8 +20,11 @@ def get_all_playlists():
         url = f'https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId={CHANNEL_ID}&maxResults={MAX_RESULTS_PER_PAGE}&key={API_KEY}'
         if next_page_token:
             url += f'&pageToken={next_page_token}'
-        response = requests.get(url)
-
+        try:
+            response = requests.get(url)
+            response.raise_for_status()  # Levanta exceções para códigos de status HTTP 4xx/5xx
+        except requests.exceptions.RequestException as e:
+            return Response(f"Error fetching data: {str(e)}", mimetype='text/plain'), 500
         if response.status_code != 200:
             return []
         
@@ -42,12 +45,11 @@ def get_latest_video():
     data = response.json()
 
     if 'items' in data and len(data['items']) > 0:
-        video_id = data['items'][0]['id']['videoId']
-        video_title = data['items'][0]['snippet']['title']
-        video_url = f'https://www.youtube.com/watch?v={video_id}'
-        return Response(f'{video_title}: {video_url}', mimetype='text/plain')
+    video_item = data['items'][0]
+    if 'videoId' in video_item['id']:
+        video_id = video_item['id']['videoId']
     else:
-        return Response('No videos found', mimetype='text/plain'), 404
+        return Response("No video found", mimetype='text/plain'), 404
 
 @app.route('/playlists', methods=['GET'])
 def get_playlists():
