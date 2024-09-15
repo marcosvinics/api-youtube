@@ -6,7 +6,7 @@ import difflib
 app = Flask(__name__)
 
 # Recupera as variáveis de ambiente
-API_KEY = os.getenv('YOUTUBE_API_KEY')
+API_KEY = os.getenv('MY_SECRET_TOKEN')
 CHANNEL_ID = os.getenv('CHANNEL_ID')
 MAX_RESULTS_PER_PAGE = 5
 
